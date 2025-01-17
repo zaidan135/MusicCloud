@@ -1,0 +1,168 @@
+
+
+
+/* Resize Handle */
+.resize-handle {
+    cursor: ew-resize;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0; /* Posisi berada di sisi kanan dari left-column */
+    z-index: 10; /* Pastikan berada di atas kolom */
+}
+
+/* Container Left Column */
+#left-column {
+    position: relative; /* Agar resize-handle diposisikan relatif terhadap left-column */
+    width: 300px; /* Atur lebar default kolom kiri */
+    overflow: hidden; /* Menjaga konten tetap berada dalam batas container */
+}
+
+
+.container-img {
+    height: 200vh;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+    width: 5px;
+    height: 6px;
+}
+
+/* Mengubah warna scrollbar track */
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+/* Mengubah warna dan bentuk scrollbar thumb */
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #734C96;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #a571d3;
+}
+
+
+/* Gaya awal (tidak terlihat) */
+.fade-out {
+  opacity: 0;
+  transform: translateY(20px); /* Geser sedikit ke bawah */
+  transition: opacity 2s ease, transform 2s ease;
+}
+
+/* Gaya saat elemen terlihat */
+.fade-in {
+  opacity: 1;
+  transform: translateY(0); /* Kembali ke posisi awal */
+}
+
+
+@keyframes scroll-indicator {
+  0% {
+      opacity: 1;
+      transform: translateY(0);
+  }
+  100% {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+}
+
+.animate-scroll-indicator {
+  animation: scroll-indicator 1.5s infinite;
+}
+
+
+.police-line-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Prevent interaction blocking */
+  z-index: 0;
+  display: flex;
+  flex-direction: column; /* Arrange lines vertically */
+  justify-content: space-evenly;
+  align-items: center /* Distribute lines evenly */
+}
+
+/* Static full-width div for police line */
+.police-line {
+  position: absolute;
+  width: 120%; /* Full width of screen */
+  height: 40px;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-top: 2px solid #442263;
+  border-bottom: 2px solid #442263;
+  transform-origin: center;
+  display: flex;
+  align-items: center /* Rotation origin */
+}
+
+/* Moving text inside static div */
+.police-text {
+  position: absolute;
+  width: 100%; /* Ensure text spans twice the div width for smooth loop */
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #442263;
+  background: linear-gradient(to right, #442263 0%, #442263 50%, #442263 100%);
+  animation: move-text 20s linear infinite;
+}
+
+/* Animation for text movement */
+@keyframes move-text {
+  from {
+      transform: translateX(100%); /* Start fully outside the right edge */
+  }
+  to {
+      transform: translateX(-100%); /* End fully outside the left edge */
+  }
+}
+
+/* Custom rotations for police lines */
+.police-line:nth-child(1) {
+  transform: rotate(40deg) translateY(-20%);
+}
+
+.police-line:nth-child(2) {
+  transform: rotate(35deg) translateY(0%);
+}
+
+.police-line:nth-child(3) {
+  transform: rotate(0deg) translateY(20%);
+}
+
+.police-line:nth-child(4) {
+  transform: rotate(-25deg) translateY(40%);
+}
+.police-line:nth-child(5) {
+  transform: rotate(90deg) translateY(40%);
+}
+
+
+#footer-details-popover {
+  z-index: 50;
+  animation: fadeIn 0.3s ease-out;
+  background-color: #fff;
+  color: #000;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
