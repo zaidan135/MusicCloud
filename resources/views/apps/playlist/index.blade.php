@@ -5,11 +5,11 @@
         @if($playlists->isEmpty())
             <p class="text-gray-400">Anda belum memiliki playlist. <a href="{{ route('playlist.create') }}" class="text-blue-500 underline">Buat playlist sekarang.</a></p>
         @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-fit h-fit">
                 @foreach($playlists as $playlist)
                     <div class="bg-gray-800 rounded-lg p-4">
                         <div class="mb-4">
-                            <img src="{{ $playlist->image ? asset('storage/' . $playlist->image) : 'https://via.placeholder.com/150' }}" alt="{{ $playlist->name }}" class="w-full rounded-lg">
+                            <img src="{{ asset('storage/' . $playlist->image) }}" alt="{{ $playlist->name }}" class="rounded-lg size-60">
                         </div>
                         <h2 class="text-xl font-semibold">{{ $playlist->name }}</h2>
                         <p class="text-gray-400 text-sm">{{ $playlist->description }}</p>

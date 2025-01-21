@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/playlist', [PlaylistController::class, 'index'])->name('playlist.index');
     Route::get('/playlist/{id}', [PlaylistController::class, 'show'])->name('playlist.show');
     Route::get('/playlist/add/{id}', [PlaylistController::class, 'add'])->name('playlist.add');
-    Route::get('/playlist/create', [PlaylistController::class, 'create'])->name('playlist.create');
+    Route::get('/create/playlist', [PlaylistController::class, 'create'])->name('playlist.create');
     Route::post('/playlist/store', [PlaylistController::class, 'store'])->name('playlist.store');
 });
 

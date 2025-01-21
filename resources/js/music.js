@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const audioPlayer = document.getElementById('audio-player');
-    const footerElement = document.getElementById('footer'); // Elemen footer
+    const footerElement = document.getElementById('footer');
+    const contentElement = document.getElementById('content');
+    
     let currentMusic = null;
     let isUserDragging = false;
 
@@ -61,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Tampilkan footer
         footerElement.classList.add('flex');
         footerElement.classList.remove('hidden');
+        contentElement.classList.remove('mb-2')
     }
 
     // Event Listener untuk tombol Play pada daftar lagu

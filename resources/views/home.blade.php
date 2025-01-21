@@ -13,7 +13,7 @@
         <!-- Styles / Scripts -->
         @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/parallax.js'])
     </head>
-    <body class="scrollbar-thin">
+    <body class="scrollbar-thin2">
     <!-- Navigator -->
     <div class="z-50 fixed w-full h-20 flex justify-center backdrop-blur-md bg-opacity-90 bg-black shadow-lg">
         <nav class="flex justify-between items-center w-full md:w-3/4 px-4 md:px-0 h-full">

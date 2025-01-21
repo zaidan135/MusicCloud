@@ -10,7 +10,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Gambar Album -->
             <div>
-                <img src="{{ asset('storage/' . $music->image) }}" alt="Album Cover" class="w-full rounded-lg">
+                <img src="{{ asset('storage/' . $music->image) }}" alt="Album Cover" class="size-96 rounded-lg">
             </div>
             <!-- Informasi Lagu -->
             <div>

@@ -1,4 +1,4 @@
-<x-apps-layout>
+<x-app-layout>
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mt-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Upload Musik Baru</h2>
 
@@ -59,4 +59,4 @@
             <x-primary-button type="submit" class="w-full flex justify-center text-white p-3 rounded-lg font-semibold">Upload Musik</x-primary-button>
         </form>
     </div>
-</x-apps-layout>
+</x-app-layout>

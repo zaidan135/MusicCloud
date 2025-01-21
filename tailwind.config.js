@@ -21,6 +21,8 @@ export default {
                 fourth: '#210D32',
                 fifth: '#13081E',
                 sixth: '#D6BDEC',
+                seventh: '#371C50',
+                eighth: '#FBFBFB',
             },
         },
     },

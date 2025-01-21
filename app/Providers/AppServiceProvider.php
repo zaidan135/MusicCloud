@@ -25,11 +25,21 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer('components.aside', function ($view) {
             $userId = Auth::id();
-    
-            $playlists = Playlist::where('id_users', $userId)->get();
-            $likedMusic = Liked::where('id_users', $userId)->with('musicPost.details')->get();
-    
+        
+            $playlists = Playlist::where('id_users', $userId)
+                ->with(['musicPosts.details', 'user'])
+                ->get()
+                ->map(function ($playlist) {
+                    $playlist->music_count = $playlist->musicPosts->count(); // Hitung jumlah musik di setiap playlist
+                    return $playlist;
+                });
+        
+            $likedMusic = Liked::where('id_users', $userId)
+                ->with('musicPost.details')
+                ->get();
+        
             $view->with(compact('playlists', 'likedMusic'));
         });
+        
     }
 }

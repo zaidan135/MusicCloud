@@ -12,7 +12,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/js/music.js'])
+        @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/js/music.js', 'resources/js/aside.js', 'resources/css/aside.css'])
     </head>
     <body class="font-sans antialiased bg-black scrollbar-thin">
 
@@ -21,7 +21,7 @@
             <x-navbar />
     
             <!-- Bagian 2 Main Content dengan rounded-xl -->
-            <div class="flex flex-grow rounded-xl overflow-hidden bg-primary">
+            <div class="flex flex-grow rounded-lg overflow-hidden bg-primary">
                 <div id="right-column" class="right-column w-full">
                     <div class="w-full h-full">
                         <main class="h-full overflow-y-scroll scrollbar-thin">

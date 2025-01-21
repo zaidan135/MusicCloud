@@ -81,7 +81,7 @@ class MusicController extends Controller
     public function show($id)
     {
         $music = MusicPost::with('details', 'user', 'liked', 'played', 'analytics')->findOrFail($id);
-        $playlists = Playlist::where('id_users', Auth::id())->get(); // Ambil semua playlist pengguna
+        $playlists = Playlist::where('id_users', Auth::id())->get();
     
         return view('apps.music.show', compact('music', 'playlists'));
     }
@@ -89,7 +89,6 @@ class MusicController extends Controller
 
     public function like($id)
     {
-        $music = MusicPost::findOrFail($id);
         $userId = auth::id(); // Ambil ID pengguna yang login
     
         // Periksa apakah sudah di-like sebelumnya

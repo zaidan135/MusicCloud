@@ -30,7 +30,7 @@
 
 /* Mengubah warna scrollbar track */
 .scrollbar-thin::-webkit-scrollbar-track {
-  background: #000000;
+  background: transparent;
 }
 
 /* Mengubah warna dan bentuk scrollbar thumb */
@@ -40,6 +40,25 @@
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #a571d3;
+}
+
+
+.scrollbar-thin2::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+.scrollbar-thin2::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* Mengubah warna dan bentuk scrollbar thumb */
+.scrollbar-thin2::-webkit-scrollbar-thumb {
+  background: #734C96;
+  border-radius: 3px;
+}
+
+.scrollbar-thin2::-webkit-scrollbar-thumb:hover {
   background: #a571d3;
 }
 

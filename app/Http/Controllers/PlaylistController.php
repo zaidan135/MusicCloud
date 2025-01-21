@@ -53,12 +53,15 @@ class PlaylistController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:255',
         ]);
+
+        $imagePath = $request->hasFile('image') ? $request->file('image')->store('imgPlaylist', 'public') : null;
+        $imageUrl = $imagePath ? str_replace('public/', 'storage/', $imagePath) : null;
     
         Playlist::create([
             'id_users' => Auth::id(), // Masukkan ID pengguna yang login
             'name' => $request->name,
             'description' => $request->description,
-            'image' => $request->file('image') ? $request->file('image')->store('playlist_images') : null,
+            'image' => $imageUrl,
         ]);
     
         return redirect()->route('dashboard')->with('success', 'Playlist berhasil dibuat!');
