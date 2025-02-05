@@ -10,11 +10,22 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/css/custom.css', 'resources/js/app.js', 'resources/js/custom.js', 'resources/js/music.js', 'resources/js/aside.js', 'resources/css/aside.css'])
     </head>
     <body class="font-sans antialiased bg-black scrollbar-thin">
+        @if(session('success'))
+        <div id="success-message" class="bg-green-800 text-white p-4 rounded-lg fixed top-10 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-500 opacity-100">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if(session('error'))
+        <div id="error-message" class="bg-red-800 text-white p-4 rounded-lg fixed top-10 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-500 opacity-100">
+            {{ session('error') }}
+        </div>
+        @endif
 
         <div class="min-h-screen max-h-screen flex flex-col px-3">
             <!-- Bagian 1: Navbar -->

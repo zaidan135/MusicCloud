@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MusicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PlaylistController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\SpotifyController;
 
 Route::get('/', function () {
     return view('home');
@@ -23,6 +25,13 @@ Route::get('/music/upload', [MusicController::class, 'create'])->name('music.cre
 Route::post('/music/store', [MusicController::class, 'store'])->name('music.store');
 Route::get('/music/{id}', [MusicController::class, 'show'])->name('music.show');
 Route::post('/music/{id}/like', [MusicController::class, 'like'])->name('music.like');
+Route::post('/music/{music}/comment', [MusicController::class, 'addComment'])->name('music.comment');
+Route::delete('/music/{music}/comment/{comment}', [MusicController::class, 'deleteComment'])->name('music.comment.delete');
+
+
+
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/playlist', [PlaylistController::class, 'index'])->name('playlist.index');
@@ -33,6 +42,13 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/playlist/add-music', [PlaylistController::class, 'addMusic'])->name('playlist.addMusic');
+
+
+Route::get('/genre/{genre}', [GenreController::class, 'index'])->name('genre.index');
+
+
+Route::get('/spotify/{genre}', [SpotifyController::class, 'getMusicByGenre'])->name('spotifygenre');
+
 
 
 require __DIR__.'/auth.php';

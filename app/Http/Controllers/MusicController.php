@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use getID3;
 use App\Models\Liked;
+use GuzzleHttp\Client;
+use App\Models\Comments;
 use App\Models\Playlist;
 use App\Models\MusicPost;
 use App\Models\MusicDetails;
@@ -12,6 +14,29 @@ use Illuminate\Support\Facades\Auth;
 
 class MusicController extends Controller
 {
+
+    private $client;
+    private $token;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+        $this->token = $this->getAccessToken();
+    }
+
+    private function getAccessToken()
+    {
+        $response = $this->client->post('https://accounts.spotify.com/api/token', [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => env('SPOTIFY_CLIENT_ID'),
+                'client_secret' => env('SPOTIFY_CLIENT_SECRET'),
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true)['access_token'];
+    }
+
     public function index()
     {
         // Ambil semua lagu dari database dengan informasi detailnya
@@ -19,8 +44,13 @@ class MusicController extends Controller
 
         $selectedMusicPost = $musicPosts->first();
 
+        // Ambil genre dari Spotify
+        $spotifyGenres = $this->getSpotifyGenres();
+        // Ambil musik populer dari Spotify
+        $spotifyTracks = $this->getSpotifyTopTracks();
+
         // Kirim data ke view
-        return view('apps.main.dashboard', compact('musicPosts', 'selectedMusicPost'));
+        return view('apps.main.dashboard', compact('musicPosts', 'selectedMusicPost', 'spotifyGenres', 'spotifyTracks'));
     }
 
     public function create()
@@ -75,7 +105,7 @@ class MusicController extends Controller
             'image' => $imageUrl,
         ]);
     
-        return redirect()->back()->with('success', 'Music berhasil diunggah!');
+        return redirect()->back()->with('success', 'Music uploaded successfully!');
     }
 
     public function show($id)
@@ -102,7 +132,7 @@ class MusicController extends Controller
               ->where('id_music_post', $id)
               ->delete();
 
-          return redirect()->back()->with('info', 'Like dihapus.');
+          return redirect()->back()->with('info', 'Like deleted.');
         }
     
         // Tambahkan like baru
@@ -111,7 +141,93 @@ class MusicController extends Controller
             'id_music_post' => $id,
         ]);
     
-        return redirect()->back()->with('success', 'Musik berhasil di-like!');
+        return redirect()->back()->with('success', 'The music has been liked!');
+    }
+
+    public function addComment(Request $request, MusicPost $music)
+    {
+        // Validasi input
+        $request->validate([
+            'commentar' => 'required|string|max:500',  // Pastikan kolom komentar diisi dan tidak melebihi 500 karakter
+        ]);
+    
+        // Membuat instance baru dari model Comment
+        $comment = new Comments();
+    
+        // Menyimpan data yang diterima ke dalam kolom terkait
+        $comment->id_users = auth::id();  // Ambil ID pengguna yang sedang login
+        $comment->id_music_post = $music->id;  // Ambil ID musik yang diberikan
+        $comment->commentar = $request->commentar;  // Ambil komentar yang dimasukkan
+    
+        // Simpan komentar ke database
+        $comment->save();  // Pastikan Anda memanggil method save untuk menyimpan data ke dalam database
+    
+        // Mengembalikan halaman sebelumnya dengan pesan sukses
+        return redirect()->back()->with('success', 'Comment added successfully!');
+    }
+
+    public function deleteComment(MusicPost $music, Comments $comment)
+    {
+        // Cek apakah pengguna yang login adalah pemilik komentar
+        if ($comment->id_users !== auth::id()) {
+            return redirect()->back()->with('error', "You cannot delete other people's comments.");
+        }
+    
+        // Menghapus komentar
+        $comment->delete();
+    
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('music.show', $music->id)->with('success', 'Comment successfully deleted!');
+    }
+
+
+    private function getSpotifyGenres()
+    {
+        try {
+            $response = $this->client->get("https://api.spotify.com/v1/browse/categories", [
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $this->token,
+                    'Accept' => 'application/json',
+                ],
+                'query' => ['country' => 'US', 'limit' => 20], // Filter untuk hasil lebih akurat
+            ]);
+    
+            $categories = json_decode($response->getBody(), true)['categories']['items'] ?? [];
+            return array_map(fn($category) => $category['name'], $categories); // Ambil hanya nama genre
+    
+        } catch (\Exception $e) {
+            \Log::error("Spotify API Error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    
+
+    private function getSpotifyTopTracks()
+    {
+        $response = $this->client->get("https://api.spotify.com/v1/browse/new-releases", [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $this->token,
+            ],
+            'query' => [
+                'country' => 'US',
+                'limit' => 10,
+            ],
+        ]);
+
+        $albums = json_decode($response->getBody(), true)['albums']['items'];
+
+        $tracks = [];
+        foreach ($albums as $album) {
+            $tracks[] = [
+                'name' => $album['name'],
+                'artist' => $album['artists'][0]['name'],
+                'image' => $album['images'][0]['url'] ?? null,
+                'spotify_url' => $album['external_urls']['spotify'],
+            ];
+        }
+
+        return $tracks;
     }
     
 }

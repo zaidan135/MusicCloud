@@ -37,6 +37,11 @@ class MusicPost extends Model
         return $this->hasOne(Analytics::class, 'id_music_post');
     }
 
+    public function comments()
+    {
+    return $this->hasMany(Comments::class, 'id_music_post');
+    }
+
     public function likeCount()
     {
     return $this->liked()->count();

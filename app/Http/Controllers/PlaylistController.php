@@ -35,7 +35,7 @@ class PlaylistController extends Controller
         $playlists = Playlist::where('id_users', $userId)->get();
     
         if ($playlists->isEmpty()) {
-            return redirect()->route('playlist.create')->with('info', 'Buat playlist terlebih dahulu.');
+            return redirect()->route('playlist.create')->with('info', 'Make a playlist first.');
         }
     
         return view('apps.playlist.add', compact('music', 'playlists'));
@@ -64,7 +64,7 @@ class PlaylistController extends Controller
             'image' => $imageUrl,
         ]);
     
-        return redirect()->route('dashboard')->with('success', 'Playlist berhasil dibuat!');
+        return redirect()->route('dashboard')->with('success', 'Playlist created successfully!');
     }
     
     public function addMusic(Request $request)
@@ -80,7 +80,7 @@ class PlaylistController extends Controller
             ->exists();
     
         if ($exists) {
-            return redirect()->back()->with('info', 'Musik sudah ada di playlist.');
+            return redirect()->back()->with('info', 'The music is already in the playlist.');
         }
     
         // Tambahkan musik ke playlist
@@ -89,7 +89,7 @@ class PlaylistController extends Controller
             'id_music_post' => $request->id_music_post,
         ]);
     
-        return redirect()->back()->with('success', 'Musik berhasil ditambahkan ke playlist.');
+        return redirect()->back()->with('success', 'Music successfully added to playlist.');
     }
     
     public function library()

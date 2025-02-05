@@ -45,7 +45,7 @@
                                     @php
                                         $musicImages = $playlist->musicPosts->take(4)->pluck('image')->filter();
                                     @endphp
-                                    @if($musicImages->count() > 0)
+                                    @if($musicImages->count() >= 4)
                                         <div class="grid grid-cols-2 grid-rows-2 w-full rounded-lg">
                                             @foreach($musicImages as $image)
                                                 <img src="{{ asset('storage/' . $image) }}" alt="Music Image" class="object-cover w-full h-full">
@@ -80,7 +80,7 @@
                         </a>
                     </li>
                 @empty
-                    <li class="text-gray-400">Tidak ada playlist ditemukan.</li>
+                    <li class="text-gray-400">No playlists found.</li>
                 @endforelse
             </ul>
             <a href="{{ route('playlist.index') }}" class="flex items-center justify-center w-full gap-3 hover:opacity-75">
@@ -112,7 +112,7 @@
                         </a>
                     </li>
                 @empty
-                    <li class="text-gray-400">Tidak ada musik yang disukai.</li>
+                    <li class="text-gray-400">No favorite music.</li>
                 @endforelse
             </ul>
         </div>

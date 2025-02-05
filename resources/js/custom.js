@@ -67,3 +67,61 @@ document.addEventListener('DOMContentLoaded', () => {
         popover.classList.add('hidden');
     });
 });
+
+
+
+//calouser
+
+document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('slider');
+    const slides = slider.children;
+    const buttons = document.querySelectorAll('[data-slide]');
+    let currentIndex = 0;
+    const slideInterval = 5000; // 5 detik
+
+    // Fungsi untuk berpindah slide
+    const changeSlide = (index) => {
+        slider.style.transform = `translateX(-${index * 100}%)`;
+        buttons.forEach((btn, i) => {
+            btn.classList.toggle('bg-gray-200', i === index);
+            btn.classList.toggle('bg-gray-400', i !== index);
+        });
+        currentIndex = index;
+    };
+
+    // Auto Slide
+    let autoSlide = setInterval(() => {
+        const nextIndex = (currentIndex + 1) % slides.length;
+        changeSlide(nextIndex);
+    }, slideInterval);
+
+    // Navigasi dengan tombol
+    buttons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            clearInterval(autoSlide);
+            changeSlide(index);
+            autoSlide = setInterval(() => {
+                const nextIndex = (currentIndex + 1) % slides.length;
+                changeSlide(nextIndex);
+            }, slideInterval);
+        });
+    });
+
+    // Set slide awal
+    changeSlide(currentIndex);
+});
+
+setTimeout(() => {
+    const successMessage = document.getElementById('success-message');
+    const errorMessage = document.getElementById('error-message');
+    
+    if (successMessage) {
+        successMessage.style.opacity = 0;
+        setTimeout(() => successMessage.style.display = 'none', 100);
+    }
+    
+    if (errorMessage) {
+        errorMessage.style.opacity = 0;
+        setTimeout(() => errorMessage.style.display = 'none', 100);
+    }
+}, 5000); // Menunggu 5 detik sebelum pesan menghilang

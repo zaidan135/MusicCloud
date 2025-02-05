@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('composer');
             $table->string('genre');
             $table->text('description')->nullable();
-            $table->integer('duration')->comment('Duration in seconds');
+            $table->text('duration');
             $table->date('release_date')->nullable();
             $table->timestamps();
         });

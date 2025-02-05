@@ -55,11 +55,16 @@
                     <span class="text-sm font-medium text-gray-500 hover:text-gray-700">
                         {{ Auth::user()->name }}
                     </span>
-    
+
+                    @if(Auth::user()->profileUsers && Auth::user()->profileUsers->image)
+                    <img src="{{ asset('storage/' . Auth::user()->profileUsers->image) }}" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    @else
                     <!-- Lingkaran dengan Inisial -->
                     <div class="flex items-center justify-center h-8 w-8 bg-gray-300 text-gray-800 rounded-full ml-3">
-                        {{ substr(Auth::user()->name, 0, 1) }}
+                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                     </div>
+                    @endif
+                
                 </div>
     
                 <!-- Dropdown -->
