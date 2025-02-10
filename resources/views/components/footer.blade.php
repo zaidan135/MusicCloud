@@ -1,7 +1,7 @@
 <div class="bg-transparent text-white h-24 hidden items-center" id="footer">
     <!-- Bagian Kiri: Identitas Musik -->
     <div class="flex-shrink-0 flex items-center w-1/5">
-        <img id="footer-music-image" src="https://via.placeholder.com/50" alt="Album Cover" class="w-12 h-12 rounded-md mr-3" />
+        <img id="footer-music-image" src="#" alt="Album Cover" class="w-12 h-12 rounded-md mr-3" />
         <div>
             <p id="footer-music-title" class="font-semibold text-sm">Judul Musik</p>
             <p id="footer-music-singer" class="text-gray-400 text-xs">Penyanyi</p>
@@ -36,7 +36,7 @@
         </div>
     
         <!-- Elemen Audio (Tersembunyi) -->
-        <audio id="audio-player" preload="auto" class="hidden"></audio>
+        <audio id="audio-player" preload="metadata" class="hidden"></audio>
     </div>
     
 
